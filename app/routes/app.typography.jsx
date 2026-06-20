@@ -1,4 +1,3 @@
-
 import { useFetcher, useLoaderData } from "react-router";
 import prisma from "../db.server";
 import TypographyBlock from "../components/TypographyBlock";
@@ -19,48 +18,41 @@ export async function action({ request }) {
   const formData = await request.formData();
 
   const record = await prisma.typographySettings.upsert({
-  where: {
-    shop: "demo-shop",
-  },
+    where: {
+      shop: "demo-shop",
+    },
 
-  update: {
-    fontFamily: formData.get("fontFamily"),
-    desktopSize: formData.get("desktopSize"),
-    tabletSize: formData.get("tabletSize"),
-    mobileSize: formData.get("mobileSize"),
+    update: {
+      fontFamily: formData.get("fontFamily"),
+      desktopSize: formData.get("desktopSize"),
+      tabletSize: formData.get("tabletSize"),
+      mobileSize: formData.get("mobileSize"),
+      fontWeight: formData.get("fontWeight"),
+      lineHeight: formData.get("lineHeight"),
+      letterSpacing: formData.get("letterSpacing"),
+      unit: formData.get("unit"),
+      fontStyle: formData.get("fontStyle"),
+      textTransform: formData.get("textTransform"),
+      textDecoration: formData.get("textDecoration"),
+      fontColor: formData.get("fontColor"),
+    },
 
-    fontWeight: formData.get("fontWeight"),
-    lineHeight: formData.get("lineHeight"),
-    letterSpacing: formData.get("letterSpacing"),
-
-    unit: formData.get("unit"),
-
-    fontStyle: formData.get("fontStyle"),
-    textTransform: formData.get("textTransform"),
-    textDecoration: formData.get("textDecoration"),
-    fontColor: formData.get("fontColor"),
-  },
-
-  create: {
-    shop: "demo-shop",
-
-    fontFamily: formData.get("fontFamily"),
-    desktopSize: formData.get("desktopSize"),
-    tabletSize: formData.get("tabletSize"),
-    mobileSize: formData.get("mobileSize"),
-
-    fontWeight: formData.get("fontWeight"),
-    lineHeight: formData.get("lineHeight"),
-    letterSpacing: formData.get("letterSpacing"),
-
-    unit: formData.get("unit"),
-
-    fontStyle: formData.get("fontStyle"),
-    textTransform: formData.get("textTransform"),
-    textDecoration: formData.get("textDecoration"),
-    fontColor: formData.get("fontColor"),
-  },
-});
+    create: {
+      shop: "demo-shop",
+      fontFamily: formData.get("fontFamily"),
+      desktopSize: formData.get("desktopSize"),
+      tabletSize: formData.get("tabletSize"),
+      mobileSize: formData.get("mobileSize"),
+      fontWeight: formData.get("fontWeight"),
+      lineHeight: formData.get("lineHeight"),
+      letterSpacing: formData.get("letterSpacing"),
+      unit: formData.get("unit"),
+      fontStyle: formData.get("fontStyle"),
+      textTransform: formData.get("textTransform"),
+      textDecoration: formData.get("textDecoration"),
+      fontColor: formData.get("fontColor"),
+    },
+  });
 
   return Response.json({
     success: true,
@@ -102,38 +94,10 @@ export default function Typography() {
               borderRadius="base"
             >
               <s-paragraph>
-                ✅ Saved Successfully. ID: {fetcher.data.id}
+                Saved Successfully. ID: {fetcher.data.id}
               </s-paragraph>
             </s-box>
           )}
-
-          <s-box
-            padding="base"
-            borderWidth="base"
-            borderRadius="base"
-          >
-            <s-text variant="headingMd">
-              H2 Settings
-            </s-text>
-
-            <s-paragraph>
-              H2 component integration coming next.
-            </s-paragraph>
-          </s-box>
-
-          <s-box
-            padding="base"
-            borderWidth="base"
-            borderRadius="base"
-          >
-            <s-text variant="headingMd">
-              Paragraph Settings
-            </s-text>
-
-            <s-paragraph>
-              Paragraph typography controls coming next.
-            </s-paragraph>
-          </s-box>
 
         </s-stack>
 

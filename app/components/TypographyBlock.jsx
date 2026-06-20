@@ -5,7 +5,6 @@ export default function TypographyBlock({
   initialData,
   onSave,
 }) {
-
   const [fontFamily, setFontFamily] = useState(
     initialData?.fontFamily || "Poppins"
   );
@@ -54,7 +53,8 @@ export default function TypographyBlock({
     initialData?.fontColor || "#000000"
   );
 
-	const HeadingTag = title.toLowerCase();
+  const HeadingTag = title.toLowerCase();
+
   return (
     <s-box padding="base" borderWidth="base" borderRadius="base">
 
@@ -112,7 +112,7 @@ export default function TypographyBlock({
           onInput={(e) => setUnit(e.target.value)}
         />
 
-		<label>Font Style</label>
+        <label>Font Style</label>
         <select
           value={fontStyle}
           onChange={(e) => setFontStyle(e.target.value)}
@@ -122,7 +122,7 @@ export default function TypographyBlock({
           <option value="oblique">Oblique</option>
         </select>
 
-		<label>Text Transform</label>
+        <label>Text Transform</label>
         <select
           value={textTransform}
           onChange={(e) => setTextTransform(e.target.value)}
@@ -133,7 +133,7 @@ export default function TypographyBlock({
           <option value="capitalize">Capitalize</option>
         </select>
 
-		<label>Text Decoration</label>
+        <label>Text Decoration</label>
         <select
           value={textDecoration}
           onChange={(e) => setTextDecoration(e.target.value)}
@@ -144,7 +144,7 @@ export default function TypographyBlock({
           <option value="overline">Overline</option>
         </select>
 
-		<label>Font Color</label>
+        <label>Font Color</label>
         <input
           type="color"
           value={fontColor}
@@ -152,46 +152,45 @@ export default function TypographyBlock({
         />
 
         <s-button
-  onClick={() =>
-    onSave({
-      fontFamily,
-      desktopSize,
-      tabletSize,
-      mobileSize,
-      fontWeight,
-      lineHeight,
-      letterSpacing,
-      unit,
-      fontStyle,
-      textTransform,
-      textDecoration,
-      fontColor,
-    })
-  }
-  disabled={!onSave}
->
-  Save {title}
-</s-button>
+          onClick={() =>
+            onSave({
+              fontFamily,
+              desktopSize,
+              tabletSize,
+              mobileSize,
+              fontWeight,
+              lineHeight,
+              letterSpacing,
+              unit,
+              fontStyle,
+              textTransform,
+              textDecoration,
+              fontColor,
+            })
+          }
+        >
+          Save {title}
+        </s-button>
 
       </s-stack>
 
-     <div style={{ marginTop: "20px" }}>
-  <HeadingTag
-    style={{
-      fontFamily,
-      fontSize: `${desktopSize}${unit}`,
-      fontWeight,
-      lineHeight,
-      letterSpacing: `${letterSpacing}${unit}`,
-      fontStyle,
-      textTransform,
-      textDecoration,
-      color: fontColor,
-    }}
-  >
-    {title} Preview
-  </HeadingTag>
-</div>
+      <div style={{ marginTop: "20px" }}>
+        <HeadingTag
+          style={{
+            fontFamily,
+            fontSize: `${desktopSize}${unit}`,
+            fontWeight,
+            lineHeight,
+            letterSpacing: `${letterSpacing}${unit}`,
+            fontStyle,
+            textTransform,
+            textDecoration,
+            color: fontColor,
+          }}
+        >
+          {title} Preview
+        </HeadingTag>
+      </div>
 
     </s-box>
   );
