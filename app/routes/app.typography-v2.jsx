@@ -3,27 +3,24 @@ import prisma from "../db.server";
 import TypographyBlock from "../components/TypographyBlock";
 
 export async function loader() {
-  const h1Settings = await prisma.typographySettings.findUnique({
+  const settings = await prisma.typographySettings.findMany({
     where: {
-      shop_type: {
-        shop: "demo-shop",
-        type: "H1",
-      },
+      shop: "demo-shop",
     },
   });
 
-  const h2Settings = await prisma.typographySettings.findUnique({
-    where: {
-      shop_type: {
-        shop: "demo-shop",
-        type: "H2",
-      },
-    },
-  });
+  const getSetting = (type) =>
+    settings.find((item) => item.type === type) || null;
 
   return Response.json({
-    h1Settings,
-    h2Settings,
+    h1Settings: getSetting("H1"),
+    h2Settings: getSetting("H2"),
+    h3Settings: getSetting("H3"),
+    h4Settings: getSetting("H4"),
+    h5Settings: getSetting("H5"),
+    h6Settings: getSetting("H6"),
+    pSettings: getSetting("P"),
+    buttonSettings: getSetting("BUTTON"),
   });
 }
 
@@ -84,7 +81,16 @@ export async function action({ request }) {
 }
 
 export default function TypographyV2() {
-  const { h1Settings, h2Settings } = useLoaderData();
+  const {
+	  h1Settings,
+	  h2Settings,
+	  h3Settings,
+	  h4Settings,
+	  h5Settings,
+	  h6Settings,
+	  pSettings,
+	  buttonSettings,
+	} = useLoaderData();
   const fetcher = useFetcher();
 
   const saveSettings = (type, data) => {
@@ -113,6 +119,42 @@ export default function TypographyV2() {
         initialData={h2Settings}
         onSave={(data) => saveSettings("H2", data)}
       />
+	  
+	  <TypographyBlock
+		  title="H3"
+		  initialData={h3Settings}
+		  onSave={(data) => saveSettings("H3", data)}
+		/>
+
+		<TypographyBlock
+		  title="H4"
+		  initialData={h4Settings}
+		  onSave={(data) => saveSettings("H4", data)}
+		/>
+
+		<TypographyBlock
+		  title="H5"
+		  initialData={h5Settings}
+		  onSave={(data) => saveSettings("H5", data)}
+		/>
+
+		<TypographyBlock
+		  title="H6"
+		  initialData={h6Settings}
+		  onSave={(data) => saveSettings("H6", data)}
+		/>
+
+		<TypographyBlock
+		  title="Paragraph"
+		  initialData={pSettings}
+		  onSave={(data) => saveSettings("P", data)}
+		/>
+
+		<TypographyBlock
+		  title="Button"
+		  initialData={buttonSettings}
+		  onSave={(data) => saveSettings("BUTTON", data)}
+		/>
 
       {fetcher.state === "submitting" && (
         <s-paragraph>Saving...</s-paragraph>
