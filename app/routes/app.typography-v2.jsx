@@ -1,6 +1,7 @@
 import { useFetcher, useLoaderData } from "react-router";
 import prisma from "../db.server";
 import TypographyBlock from "../components/TypographyBlock";
+import { generateTypographyCss } from "../utils/generateTypographyCss";
 
 export async function loader() {
   const settings = await prisma.typographySettings.findMany({
@@ -80,17 +81,20 @@ export async function action({ request }) {
   });
 }
 
-export default function TypographyV2() {
+
+  
+  export default function TypographyV2() {
   const {
-	  h1Settings,
-	  h2Settings,
-	  h3Settings,
-	  h4Settings,
-	  h5Settings,
-	  h6Settings,
-	  pSettings,
-	  buttonSettings,
-	} = useLoaderData();
+    h1Settings,
+    h2Settings,
+    h3Settings,
+    h4Settings,
+    h5Settings,
+    h6Settings,
+    pSettings,
+    buttonSettings,
+  } = useLoaderData();
+
   const fetcher = useFetcher();
 
   const saveSettings = (type, data) => {
@@ -104,6 +108,20 @@ export default function TypographyV2() {
       }
     );
   };
+
+  const cssPreview = [
+    h1Settings,
+    h2Settings,
+    h3Settings,
+    h4Settings,
+    h5Settings,
+    h6Settings,
+    pSettings,
+    buttonSettings,
+  ]
+    .filter(Boolean)
+    .map(generateTypographyCss)
+    .join("\n");
 
   return (
     <s-page heading="Typography V2">
@@ -171,6 +189,27 @@ export default function TypographyV2() {
           </s-paragraph>
         </s-box>
       )}
+	  
+	  
+		<s-box
+		  padding="base"
+		  borderWidth="base"
+		  borderRadius="base"
+		>
+		  <s-text variant="headingMd">
+			Generated CSS
+		  </s-text>
+
+		  <pre
+			style={{
+			  overflowX: "auto",
+			  whiteSpace: "pre-wrap",
+			  marginTop: "10px",
+			}}
+		  >
+			{cssPreview}
+		  </pre>
+		</s-box>
 
     </s-page>
   );
